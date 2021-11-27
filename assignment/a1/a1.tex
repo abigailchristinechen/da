@@ -1,0 +1,161 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\title{Data Analysis 2: Assignment 1}
+\author{Abigail Chen}
+\date{}
+
+\usepackage{amsmath,amssymb}
+\usepackage{lmodern}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\hypersetup{
+  pdftitle={Data Analysis 2: Assignment 1},
+  pdfauthor={Abigail Chen},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+\urlstyle{same} % disable monospaced font for URLs
+\usepackage[margin=1in]{geometry}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{wrapfig}
+\usepackage{float}
+\usepackage{colortbl}
+\usepackage{pdflscape}
+\usepackage{tabu}
+\usepackage{threeparttable}
+\usepackage{threeparttablex}
+\usepackage[normalem]{ulem}
+\usepackage{makecell}
+\usepackage{xcolor}
+\usepackage{siunitx}
+\newcolumntype{d}{S[input-symbols = ()]}
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+
+\begin{document}
+\maketitle
+
+Introduction
+
+For the DA2 assignment1 I used the data taken from the Current
+Population Survey (CPS) which is the government monthly household survey
+of employment \& labor markets.The data can be accessed in this
+\href{https://osf.io/4ay9x/download}{\textbf{link}}. I chose the
+Psychologist occupation \emph{\textbf{1820}}.
+
+\begin{table}
+
+\caption{\label{tab:unnamed-chunk-4}Table 1 : Summary}
+\centering
+\begin{tabular}[t]{lrrrrrrr}
+\toprule
+  & Mean & SD & Min & Max & Median & P95 & N\\
+\midrule
+w & \num{33.51} & \num{26.74} & \num{1.52} & \num{333.33} & \num{29.90} & \num{64.30} & 176\\
+lnw & \num{3.37} & \num{0.53} & \num{0.42} & \num{5.81} & \num{3.40} & \num{4.16} & 176\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}
+\centering
+\begin{tabular}[t]{lccccc}
+\toprule
+  & Model 1 & Model 2 & Model 3 & Model 4 & Model 5\\
+\midrule
+(Intercept) & \num{3.3890}** & \num{3.3890}** & \num{3.6300} &  & \\
+ & (\num{0.0793}) & (\num{0.0793}) &  &  & \\
+female & \num{-0.0288} & \num{-0.0288} & \num{0.0197} &  & \num{0.9679}**\\
+ & (\num{0.0920}) & (\num{0.0920}) &  &  & (\num{0.2069})\\
+ed\_Bachelor &  &  & \num{-0.4981} & \num{0.6626} & \num{0.6626}\\
+ &  &  &  & (\num{0.4373}) & (\num{0.4270})\\
+ed\_Master &  &  & \num{-0.3916} & \num{0.4284} & \num{0.4284}\\
+ &  &  &  & (\num{0.2591}) & (\num{0.2530})\\
+ed\_Profess &  &  & \num{-0.1678} &  & \\
+ed\_PhD &  &  & \num{-0.1177} & \num{0.6481}* & \num{0.6481}**\\
+ &  &  &  & (\num{0.2505}) & (\num{0.2446})\\
+grade92 &  &  &  & \num{0.0639}** & \num{0.0639}**\\
+ &  &  &  & (\num{0.0050}) & (\num{0.0049})\\
+female × ed\_Bachelor &  &  &  &  & \num{-1.2999}**\\
+ &  &  &  &  & (\num{0.4515})\\
+female × ed\_Master &  &  &  &  & \num{-0.9476}**\\
+ &  &  &  &  & (\num{0.2538})\\
+female × ed\_Profess &  &  &  &  & \num{-0.1630}\\
+ &  &  &  &  & (\num{0.2268})\\
+female × ed\_PhD &  &  &  &  & \num{-1.0568}**\\
+ &  &  &  &  & (\num{0.2336})\\
+\midrule
+Num.Obs. & \num{176} & \num{176} & \num{176} & \num{42} & \num{176}\\
+R2 & \num{0.001} & \num{0.001} & \num{0.073} & \num{0.203} & \num{0.119}\\
+Std.Errors & HC2 & HC2 & HC2 & HC1 & HC1\\
+\bottomrule
+\multicolumn{6}{l}{\rule{0pt}{1em}* p $<$ 0.05, ** p $<$ 0.01}\\
+\end{tabular}
+\end{table}
+
+\includegraphics{a1_files/figure-latex/unnamed-chunk-7-1.pdf}
+
+\begin{verbatim}
+## Warning: Ignoring unknown parameters: formual
+\end{verbatim}
+
+\begin{verbatim}
+## `geom_smooth()` using formula 'y ~ x'
+\end{verbatim}
+
+\includegraphics{a1_files/figure-latex/unnamed-chunk-8-1.pdf}
+
+\includegraphics{a1_files/figure-latex/unnamed-chunk-9-1.pdf}
+
+\end{document}

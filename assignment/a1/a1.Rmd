@@ -16,41 +16,112 @@ library(fixest)
 library(haven)
 library(huxtable)
 library(kableExtra)
+library(huxtable)
 library(modelsummary)
 library(stargazer)
 library(tidyverse)
 library(xml2)
 ```
-```
+ 
+
+```{r include=FALSE}
 ###### Loading the Data ######
-# get data from https://osf.io/4ay9x/download
-rawdata <- read_csv(paste0("/Users/abigailchristinechen/Downloads/morg2014.csv"), 
+rawdata <- read_csv(paste0("/Users/abigailchristinechen/Downloads/morg-2014-emp.csv"), 
                      col_types = cols(.default = "?", 
                                       state = "c"))
-```  
+```
+
 
 ```{r warning=FALSE, include=FALSE}
 # Filters and Data Transformations
 df <- rawdata %>% filter(occ2012==1820)
-df <-  data.table(df)
 df <- df %>% mutate(female=as.numeric(sex==2)) %>% 
   mutate(w=earnwke/uhours) %>%
   mutate(lnw=log(w))
-df <- df %>% filter(grade92 >= 44)
-df$gender <- as.numeric(df$sex)
-df$gender[df$gender==1] <- "Male" 
-df$gender[df$gender==2] <- "Female"
-df$gender <- as.character(df$gender)
+df <- df %>% filter(grade92 >= 42)
+
 ```
           
-```{r echo=FALSE, fig.align = 'left'}
-# Observations
-df[, .N, by = df$gender] %>% kbl(caption = "Table 1: Gender")  %>% kable_classic(full_width=F)
-```                                      
+                                     
                                       
-## Introduction
+###### Introduction ######
 For the DA2 assignment1 I used the data taken from the Current Population Survey (CPS) which is the government monthly household survey of employment & labor markets.The data can be accessed in this [**link**](https://osf.io/4ay9x/download).  I chose the Psychologist occupation _**1820**_.
 
 
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+###### Creating a Summary
+P95 <- function(x){ quantile(x,.95,na.rm=T)}
+datasummary(w + lnw ~ Mean + SD + Min + Max + Median + P95 + N, data = df, title = "Table 1 : Summary" )
+```
 
-                                      
+
+```{r message=FALSE, warning=FALSE, include=FALSE}
+df <- df %>% mutate(
+  ed_Asso_ap=as.numeric(grade92==42),
+  ed_Bachelor=as.numeric(grade92==43),
+  ed_Master=as.numeric(grade92==44),
+                      ed_Profess = as.numeric(grade92==45),
+                      ed_PhD = as.numeric(grade92==46))
+
+reg1 <- lm_robust(lnw~female,df) 
+reg2 <- lm_robust(lnw ~ female, data=df)
+# Base is female, ed_Associate_voc
+reg3 <- lm_robust(lnw ~ female + ed_Bachelor + ed_Master + ed_Profess + ed_PhD, data = df)
+
+# Male
+df_m <- df %>% filter(female==0)
+
+df_f <- df %>% filter(female==1)
+
+# Male
+reg4 <- lm_robust(lnw ~ grade92 + ed_Bachelor + ed_Master + ed_Profess + ed_PhD, data=df_m, se_type = "HC1")
+
+# Female
+reg5 <- lm_robust(lnw ~ grade92 + ed_Bachelor + ed_Master + ed_Profess + ed_PhD, data = df_m, se_type = "HC1")
+
+# interaction
+reg5 <- lm_robust(lnw ~ grade92 + female + ed_Bachelor + ed_Master + ed_Profess + ed_PhD + female*ed_Bachelor + female*ed_Master + female*ed_Profess + female*ed_PhD, data=df, se_type = "HC1")
+
+```
+
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+
+msummary(list(reg1, reg2, reg3, reg4, reg5),
+         fmt="%.4f",
+         gof_omit = 'DF|Deviance|Log.Lik.|F|R2 Adj.|AIC|BIC|R2 Pseudo|R2 Within',
+         stars=c('*' = .05, '**' = .01),
+         title = ""
+)
+```
+
+
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+
+f1 <- ggplot(data = df, aes(x = grade92, y = lnw)) +
+  geom_point() + 
+  geom_smooth(method="loess", formual = 'y ~ x') +
+  labs(x = "Education Levels",y = "ln of wage")
+f1
+```
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+
+f2 <- ggplot(data = df, aes(x = grade92, y = lnw)) +
+  geom_point() + 
+  geom_smooth(method="lm", formual = 'y ~ x') +
+  labs(x = "Education Levels",y = "ln of wage")
+f2
+
+```
+
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+
+f3 <- ggplot(data = df, aes(x = lnw)) +
+  geom_density()
+f3
+
+```
+
