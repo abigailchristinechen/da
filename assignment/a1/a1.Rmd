@@ -45,9 +45,12 @@ df$gender <- as.character(df$gender)
           
 ```{r echo=FALSE, fig.align = 'left'}
 # Observations
-df[, .N, by = df$gender] %>% kbl(caption = "Table : 1")  %>% kable_classic(full_width=F)
+df[, .N, by = df$gender] %>% kbl(caption = "Table 1: Gender")  %>% kable_classic(full_width=F)
 ```                                      
                                       
-                                      
-                                      
+## Introduction
+For the DA2 assignment1 I used the data taken from the Current Population Survey (CPS) which is the government monthly household survey of employment & labor markets.The data can be accessed in this [**link**](https://osf.io/4ay9x/download).  I chose the Psychologist occupation _**1820**_.
+
+
+
                                       
