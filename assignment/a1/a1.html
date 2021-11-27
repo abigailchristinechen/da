@@ -52,9 +52,17 @@
 
 <div class="entry-content">
 
-<div id="introduction" class="section level6">
-<h6>Introduction</h6>
+<div id="introduction" class="section level3">
+<h3>Introduction</h3>
 <p>For the DA2 assignment1 I used the data taken from the Current Population Survey (CPS) which is the government monthly household survey of employment &amp; labor markets.The data can be accessed in this <a href="https://osf.io/4ay9x/download"><strong>link</strong></a>. I chose the Psychologist occupation <em><strong>1820</strong></em>.</p>
+</div>
+<div id="data-analysis" class="section level3">
+<h3>Data Analysis</h3>
+<p>I created a summary table displaying the descriptive statistics table as Table 1. Trying out multivariate regressions analysis in order to check if there’s a gender based wage gap and for various education levels as well. Table 2 summarizes the different regressions used. The first regression is a level-level regression which is the ln wage of females, showing that . The second regression is for ln wage of female and education in generalshowing that . The third regression is for the ln wage of female, Bachelor’s, Masters, Professional and PhD level. The fourth regression is for the ln wage of male, Bachelor’s, Masters, Professional and PhD level.</p>
+<p>To start off the model 2 of Table 4 we conditioned gender gap on education and found that females on average earn 14.7 % less than males and this coefficient is significant at 1% significant level. We then proceeded to uncover the wage disparity, based on different levels of education. Model 3, shows the results of comparing employees of same gender with different education levels, using Associate-vocational degree as the baseline variable. We select values with more than 99 % confidence level, for example in the same gender employees with Bachelor degree tend to earn on average 33.3% more than employees with Associate- vocational degree.</p>
+<p>Table 3 summarizes the results of regression for unconditional gender gap. There are two regressions, the first regression is level-level regression which shows that females on average tend to earn USD 5.5 less than their male counterparts. This wage gap is significant at 1% significant level. The second regression is log-level regression which show that females on average earn 18% less than males and this coefficient is significant with more than 99.9% confidence level.</p>
+<p>Our next aim is to find out wage gap based on different levels of education (description of different education level are shown in the Appendix). Table 4 summarizes the result of the multivariate regressions. To start off the model 2 of Table 4 we conditioned gender gap on education and found that females on average earn 14.7 % less than males and this coefficient is significant at 1% significant level. We then proceeded to uncover the wage disparity, based on different levels of education. Model 3, shows the results of comparing employees of same gender with different education levels, using Associate-vocational degree as the baseline variable. We select values with more than 99 % confidence level, for example in the same gender employees with Bachelor degree tend to earn on average 33.3% more than employees with Associate- vocational degree.</p>
+<p>To gain a deeper understanding, we now run a regression with interaction terms using the same base variable. In the Table 5, the ALL regression column reveals, that even for women with higher education level, there exists a gender gap with 99% confidence level. For example, women with a Masters degree earns on an average 37.8 % less than males with Masters degree. In order to summarize the findings, we see that with same level of education women earn less than men. We further confirm this by performing bootstrap simulations for 1000 times and the result continued to be similar</p>
 <table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
 <caption>
 Table 1 : Summary
@@ -157,12 +165,6 @@ Model 2
 <th style="text-align:center;">
 Model 3
 </th>
-<th style="text-align:center;">
-Model 4
-</th>
-<th style="text-align:center;">
-Model 5
-</th>
 </tr>
 </thead>
 <tbody>
@@ -174,12 +176,7 @@ Model 5
 3.3890**
 </td>
 <td style="text-align:center;">
-3.3890**
-</td>
-<td style="text-align:center;">
-3.6300
-</td>
-<td style="text-align:center;">
+−2.2818
 </td>
 <td style="text-align:center;">
 </td>
@@ -188,14 +185,10 @@ Model 5
 <td style="text-align:left;">
 </td>
 <td style="text-align:center;">
-(0.0793)
+(0.0788)
 </td>
 <td style="text-align:center;">
-(0.0793)
-</td>
-<td style="text-align:center;">
-</td>
-<td style="text-align:center;">
+(1.5510)
 </td>
 <td style="text-align:center;">
 </td>
@@ -208,32 +201,48 @@ female
 −0.0288
 </td>
 <td style="text-align:center;">
-−0.0288
+0.0202
 </td>
 <td style="text-align:center;">
 0.0197
-</td>
-<td style="text-align:center;">
-</td>
-<td style="text-align:center;">
-0.9679**
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
 </td>
 <td style="text-align:center;">
-(0.0920)
+(0.0916)
 </td>
 <td style="text-align:center;">
-(0.0920)
+(0.0898)
+</td>
+<td style="text-align:center;">
+(0.0909)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+grade92
 </td>
 <td style="text-align:center;">
 </td>
 <td style="text-align:center;">
+0.1260**
 </td>
 <td style="text-align:center;">
-(0.2069)
+0.0864**
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+(0.0342)
+</td>
+<td style="text-align:center;">
+(0.0022)
 </td>
 </tr>
 <tr>
@@ -245,13 +254,7 @@ ed_Bachelor
 <td style="text-align:center;">
 </td>
 <td style="text-align:center;">
-−0.4981
-</td>
-<td style="text-align:center;">
-0.6626
-</td>
-<td style="text-align:center;">
-0.6626
+−0.5845**
 </td>
 </tr>
 <tr>
@@ -262,12 +265,7 @@ ed_Bachelor
 <td style="text-align:center;">
 </td>
 <td style="text-align:center;">
-</td>
-<td style="text-align:center;">
-(0.4373)
-</td>
-<td style="text-align:center;">
-(0.4270)
+(0.1480)
 </td>
 </tr>
 <tr>
@@ -279,13 +277,7 @@ ed_Master
 <td style="text-align:center;">
 </td>
 <td style="text-align:center;">
-−0.3916
-</td>
-<td style="text-align:center;">
-0.4284
-</td>
-<td style="text-align:center;">
-0.4284
+−0.5644**
 </td>
 </tr>
 <tr>
@@ -296,12 +288,7 @@ ed_Master
 <td style="text-align:center;">
 </td>
 <td style="text-align:center;">
-</td>
-<td style="text-align:center;">
-(0.2591)
-</td>
-<td style="text-align:center;">
-(0.2530)
+(0.0641)
 </td>
 </tr>
 <tr>
@@ -313,11 +300,18 @@ ed_Profess
 <td style="text-align:center;">
 </td>
 <td style="text-align:center;">
-−0.1678
+−0.4271*
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
 </td>
 <td style="text-align:center;">
 </td>
 <td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+(0.2000)
 </td>
 </tr>
 <tr>
@@ -329,10 +323,180 @@ ed_PhD
 <td style="text-align:center;">
 </td>
 <td style="text-align:center;">
-−0.1177
+−0.4634**
+</td>
+</tr>
+<tr>
+<td style="text-align:left;box-shadow: 0px 1px">
+</td>
+<td style="text-align:center;box-shadow: 0px 1px">
+</td>
+<td style="text-align:center;box-shadow: 0px 1px">
+</td>
+<td style="text-align:center;box-shadow: 0px 1px">
+(0.0603)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Num.Obs.
+</td>
+<td style="text-align:center;">
+176
+</td>
+<td style="text-align:center;">
+176
+</td>
+<td style="text-align:center;">
+176
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+R2
+</td>
+<td style="text-align:center;">
+0.001
+</td>
+<td style="text-align:center;">
+0.062
+</td>
+<td style="text-align:center;">
+0.073
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Std.Errors
+</td>
+<td style="text-align:center;">
+HC1
+</td>
+<td style="text-align:center;">
+HC1
+</td>
+<td style="text-align:center;">
+HC1
+</td>
+</tr>
+</tbody>
+<tfoot>
+<tr>
+<td style="padding: 0; " colspan="100%">
+<sup></sup> * p &lt; 0.05, ** p &lt; 0.01
+</td>
+</tr>
+</tfoot>
+</table>
+<table style="NAborder-bottom: 0; width: auto !important; margin-left: auto; margin-right: auto;" class="table">
+<caption>
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:center;">
+Men
+</th>
+<th style="text-align:center;">
+Women
+</th>
+<th style="text-align:center;">
+All
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+grade92
+</td>
+<td style="text-align:center;">
+0.0639**
+</td>
+<td style="text-align:center;">
+0.0869**
+</td>
+<td style="text-align:center;">
+0.0639**
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:center;">
+(0.0050)
+</td>
+<td style="text-align:center;">
+(0.0000)
+</td>
+<td style="text-align:center;">
+(0.0049)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+ed_Bachelor
+</td>
+<td style="text-align:center;">
+0.6626
+</td>
+<td style="text-align:center;">
+−0.6604**
+</td>
+<td style="text-align:center;">
+0.6626
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:center;">
+(0.4373)
+</td>
+<td style="text-align:center;">
+(0.1523)
+</td>
+<td style="text-align:center;">
+(0.4270)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+ed_Master
+</td>
+<td style="text-align:center;">
+0.4284
+</td>
+<td style="text-align:center;">
+−0.5653**
+</td>
+<td style="text-align:center;">
+0.4284
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:center;">
+(0.2591)
+</td>
+<td style="text-align:center;">
+(0.0671)
+</td>
+<td style="text-align:center;">
+(0.2530)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+ed_PhD
 </td>
 <td style="text-align:center;">
 0.6481*
+</td>
+<td style="text-align:center;">
+−0.5009**
 </td>
 <td style="text-align:center;">
 0.6481**
@@ -342,13 +506,10 @@ ed_PhD
 <td style="text-align:left;">
 </td>
 <td style="text-align:center;">
-</td>
-<td style="text-align:center;">
-</td>
-<td style="text-align:center;">
-</td>
-<td style="text-align:center;">
 (0.2505)
+</td>
+<td style="text-align:center;">
+(0.0570)
 </td>
 <td style="text-align:center;">
 (0.2446)
@@ -356,19 +517,37 @@ ed_PhD
 </tr>
 <tr>
 <td style="text-align:left;">
-grade92
+ed_Profess
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+−0.2322
+</td>
+<td style="text-align:center;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+(0.2247)
+</td>
+<td style="text-align:center;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+female
 </td>
 <td style="text-align:center;">
 </td>
 <td style="text-align:center;">
 </td>
 <td style="text-align:center;">
-</td>
-<td style="text-align:center;">
-0.0639**
-</td>
-<td style="text-align:center;">
-0.0639**
+0.9679**
 </td>
 </tr>
 <tr>
@@ -379,12 +558,7 @@ grade92
 <td style="text-align:center;">
 </td>
 <td style="text-align:center;">
-</td>
-<td style="text-align:center;">
-(0.0050)
-</td>
-<td style="text-align:center;">
-(0.0049)
+(0.2069)
 </td>
 </tr>
 <tr>
@@ -396,19 +570,11 @@ female × ed_Bachelor
 <td style="text-align:center;">
 </td>
 <td style="text-align:center;">
-</td>
-<td style="text-align:center;">
-</td>
-<td style="text-align:center;">
 −1.2999**
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-</td>
-<td style="text-align:center;">
-</td>
-<td style="text-align:center;">
 </td>
 <td style="text-align:center;">
 </td>
@@ -427,19 +593,11 @@ female × ed_Master
 <td style="text-align:center;">
 </td>
 <td style="text-align:center;">
-</td>
-<td style="text-align:center;">
-</td>
-<td style="text-align:center;">
 −0.9476**
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-</td>
-<td style="text-align:center;">
-</td>
-<td style="text-align:center;">
 </td>
 <td style="text-align:center;">
 </td>
@@ -458,19 +616,11 @@ female × ed_Profess
 <td style="text-align:center;">
 </td>
 <td style="text-align:center;">
-</td>
-<td style="text-align:center;">
-</td>
-<td style="text-align:center;">
 −0.1630
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-</td>
-<td style="text-align:center;">
-</td>
-<td style="text-align:center;">
 </td>
 <td style="text-align:center;">
 </td>
@@ -489,19 +639,11 @@ female × ed_PhD
 <td style="text-align:center;">
 </td>
 <td style="text-align:center;">
-</td>
-<td style="text-align:center;">
-</td>
-<td style="text-align:center;">
 −1.0568**
 </td>
 </tr>
 <tr>
 <td style="text-align:left;box-shadow: 0px 1px">
-</td>
-<td style="text-align:center;box-shadow: 0px 1px">
-</td>
-<td style="text-align:center;box-shadow: 0px 1px">
 </td>
 <td style="text-align:center;box-shadow: 0px 1px">
 </td>
@@ -516,16 +658,10 @@ female × ed_PhD
 Num.Obs.
 </td>
 <td style="text-align:center;">
-176
-</td>
-<td style="text-align:center;">
-176
-</td>
-<td style="text-align:center;">
-176
-</td>
-<td style="text-align:center;">
 42
+</td>
+<td style="text-align:center;">
+134
 </td>
 <td style="text-align:center;">
 176
@@ -536,16 +672,10 @@ Num.Obs.
 R2
 </td>
 <td style="text-align:center;">
-0.001
-</td>
-<td style="text-align:center;">
-0.001
-</td>
-<td style="text-align:center;">
-0.073
-</td>
-<td style="text-align:center;">
 0.203
+</td>
+<td style="text-align:center;">
+0.095
 </td>
 <td style="text-align:center;">
 0.119
@@ -556,13 +686,7 @@ R2
 Std.Errors
 </td>
 <td style="text-align:center;">
-HC2
-</td>
-<td style="text-align:center;">
-HC2
-</td>
-<td style="text-align:center;">
-HC2
+HC1
 </td>
 <td style="text-align:center;">
 HC1

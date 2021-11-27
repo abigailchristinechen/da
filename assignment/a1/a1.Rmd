@@ -44,8 +44,15 @@ df <- df %>% filter(grade92 >= 42)
           
                                      
                                       
-###### Introduction ######
+### Introduction ###
 For the DA2 assignment1 I used the data taken from the Current Population Survey (CPS) which is the government monthly household survey of employment & labor markets.The data can be accessed in this [**link**](https://osf.io/4ay9x/download).  I chose the Psychologist occupation _**1820**_.
+
+### Data Analysis ###
+I created a summary table displaying the descriptive statistics table as Table 1.  Trying out multivariate regressions analysis in order to check if there's a gender based wage gap and for various education levels as well. Table 2 is a level-level regression which is the ln wage of females, showing that female Psychologiest earn 2% more than males, and this coefficient is significant at 1% significant level.  We can also see the wage gap based on various educational attainments.  In model 3, we can compare female psychologists and their educational levels using Bachelor's as the baseline variable.  
+
+We then proceeded to uncover the wage disparity, based on different levels of education. Model 3, shows the results of comparing employees of same gender with different education levels, using Associate-vocational degree as the baseline variable. We select values with more than 99 % confidence level, for example in the same gender employees with Bachelor degree tend to earn on average 33.3% more than employees with Associate- vocational degree.
+
+The second regression is for ln wage of female and education in general showing that .  The third regression is for the ln wage of female, Bachelor's, Masters, Professional and PhD level. The fourth regression is for the ln wage of male, Bachelor's, Masters, Professional and PhD level. 
 
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
@@ -63,31 +70,27 @@ df <- df %>% mutate(
                       ed_Profess = as.numeric(grade92==45),
                       ed_PhD = as.numeric(grade92==46))
 
-reg1 <- lm_robust(lnw~female,df) 
-reg2 <- lm_robust(lnw ~ female, data=df)
+reg1 <- lm_robust(lnw ~ female, df, se_type = "HC1") 
+reg2 <- lm_robust(lnw ~ female + grade92, data=df, se_type = "HC1")
 # Base is female, ed_Associate_voc
-reg3 <- lm_robust(lnw ~ female + ed_Bachelor + ed_Master + ed_Profess + ed_PhD, data = df)
 
-# Male
-df_m <- df %>% filter(female==0)
+reg3 <- lm_robust(lnw ~ female + grade92 + ed_Bachelor + ed_Master + ed_Profess + ed_PhD, data = df, se_type = "HC1")
 
-df_f <- df %>% filter(female==1)
 
-# Male
-reg4 <- lm_robust(lnw ~ grade92 + ed_Bachelor + ed_Master + ed_Profess + ed_PhD, data=df_m, se_type = "HC1")
+reg4 <- lm_robust(lnw ~ grade92 + ed_Bachelor + ed_Master + ed_Profess + ed_PhD, data=df %>% filter(female==0) , se_type = "HC1")
 
-# Female
-reg5 <- lm_robust(lnw ~ grade92 + ed_Bachelor + ed_Master + ed_Profess + ed_PhD, data = df_m, se_type = "HC1")
+
+reg5 <- lm_robust(lnw ~ grade92 + ed_Bachelor + ed_Master + ed_Profess + ed_PhD, data = df %>% filter(female==1), se_type = "HC1")
 
 # interaction
-reg5 <- lm_robust(lnw ~ grade92 + female + ed_Bachelor + ed_Master + ed_Profess + ed_PhD + female*ed_Bachelor + female*ed_Master + female*ed_Profess + female*ed_PhD, data=df, se_type = "HC1")
+reg6 <- lm_robust(lnw ~ grade92 + female + female*ed_Bachelor + female*ed_Master + female*ed_Profess + female*ed_PhD, data=df, se_type = "HC1")
 
 ```
 
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
 
-msummary(list(reg1, reg2, reg3, reg4, reg5),
+msummary(list(reg1, reg2, reg3),
          fmt="%.4f",
          gof_omit = 'DF|Deviance|Log.Lik.|F|R2 Adj.|AIC|BIC|R2 Pseudo|R2 Within',
          stars=c('*' = .05, '**' = .01),
@@ -95,7 +98,14 @@ msummary(list(reg1, reg2, reg3, reg4, reg5),
 )
 ```
 
-
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+msummary(list("Men" = reg4, "Women" = reg5, "All" = reg6),
+         fmt="%.4f",
+         gof_omit = 'DF|Deviance|Log.Lik.|F|R2 Adj.|AIC|BIC|R2 Pseudo|R2 Within',
+         stars=c('*' = .05, '**' = .01),
+         title = ""
+)
+```
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
 
