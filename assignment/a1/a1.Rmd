@@ -1,0 +1,53 @@
+---
+title: "Data Analysis 2: Assignment 1"
+author: "Abigail Chen"
+output: 
+  prettydoc::html_pretty:
+    theme: hpstr
+    highlight: github
+---
+
+```{r include=FALSE}
+rm(list=ls())
+library(data.table)
+library(dplyr)
+library(estimatr)
+library(fixest)
+library(haven)
+library(huxtable)
+library(kableExtra)
+library(modelsummary)
+library(stargazer)
+library(tidyverse)
+library(xml2)
+```
+```
+###### Loading the Data ######
+# get data from https://osf.io/4ay9x/download
+rawdata <- read_csv(paste0("/Users/abigailchristinechen/Downloads/morg2014.csv"), 
+                     col_types = cols(.default = "?", 
+                                      state = "c"))
+```  
+
+```{r warning=FALSE, include=FALSE}
+# Filters and Data Transformations
+df <- rawdata %>% filter(occ2012==1820)
+df <-  data.table(df)
+df <- df %>% mutate(female=as.numeric(sex==2)) %>% 
+  mutate(w=earnwke/uhours) %>%
+  mutate(lnw=log(w))
+df <- df %>% filter(grade92 >= 44)
+df$gender <- as.numeric(df$sex)
+df$gender[df$gender==1] <- "Male" 
+df$gender[df$gender==2] <- "Female"
+df$gender <- as.character(df$gender)
+```
+          
+```{r echo=FALSE, fig.align = 'left'}
+# Observations
+df[, .N, by = df$gender] %>% kbl(caption = "Table : 1")  %>% kable_classic(full_width=F)
+```                                      
+                                      
+                                      
+                                      
+                                      
