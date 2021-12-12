@@ -1,10 +1,7 @@
 ---
 title: "Data Analysis 2: Assignment 1"
 author: "Abigail Chen"
-output: 
-  prettydoc::html_pretty:
-    theme: hpstr
-    highlight: github
+output: html_document
 ---
 
 ```{r include=FALSE}

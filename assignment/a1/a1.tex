@@ -86,13 +86,33 @@
 \begin{document}
 \maketitle
 
-Introduction
+\hypertarget{introduction}{%
+\subsubsection{Introduction}\label{introduction}}
 
 For the DA2 assignment1 I used the data taken from the Current
 Population Survey (CPS) which is the government monthly household survey
 of employment \& labor markets.The data can be accessed in this
 \href{https://osf.io/4ay9x/download}{\textbf{link}}. I chose the
 Psychologist occupation \emph{\textbf{1820}}.
+
+\hypertarget{data-analysis}{%
+\subsubsection{Data Analysis}\label{data-analysis}}
+
+I created a summary table displaying the descriptive statistics table as
+Table 1. Trying out multivariate regressions analysis in order to check
+if there's a gender based wage gap and for various education levels as
+well. Table 2 is a level-level regression which is the ln wage of
+females, showing that female Psychologiest earn 2\% more than males, and
+this coefficient is significant at 1\% significant level. We can also
+see the wage gap based on various educational attainments. In model 3,
+we can compare psychologists and their educational levels using
+Bachelor's as the baseline variable, those with Masters tend to earn
+56\% lesser than the ones with bachelors. Finally, we can run various
+regressions with education using the same base variable which can be
+seen in the last table. Here we can see that female Psychologists with
+masters earn 94\% less than their male counterparts. For female
+psychologists with PhD they earn 105\% less than Male psychologists with
+PhD.
 
 \begin{table}
 
@@ -109,53 +129,77 @@ lnw & \num{3.37} & \num{0.53} & \num{0.42} & \num{5.81} & \num{3.40} & \num{4.16
 \end{table}
 
 \begin{table}
+
+\caption{\label{tab:unnamed-chunk-6}}
 \centering
-\begin{tabular}[t]{lccccc}
+\begin{tabular}[t]{lccc}
 \toprule
-  & Model 1 & Model 2 & Model 3 & Model 4 & Model 5\\
+  & Model 1 & Model 2 & Model 3\\
 \midrule
-(Intercept) & \num{3.3890}** & \num{3.3890}** & \num{3.6300} &  & \\
- & (\num{0.0793}) & (\num{0.0793}) &  &  & \\
-female & \num{-0.0288} & \num{-0.0288} & \num{0.0197} &  & \num{0.9679}**\\
- & (\num{0.0920}) & (\num{0.0920}) &  &  & (\num{0.2069})\\
-ed\_Bachelor &  &  & \num{-0.4981} & \num{0.6626} & \num{0.6626}\\
- &  &  &  & (\num{0.4373}) & (\num{0.4270})\\
-ed\_Master &  &  & \num{-0.3916} & \num{0.4284} & \num{0.4284}\\
- &  &  &  & (\num{0.2591}) & (\num{0.2530})\\
-ed\_Profess &  &  & \num{-0.1678} &  & \\
-ed\_PhD &  &  & \num{-0.1177} & \num{0.6481}* & \num{0.6481}**\\
- &  &  &  & (\num{0.2505}) & (\num{0.2446})\\
-grade92 &  &  &  & \num{0.0639}** & \num{0.0639}**\\
- &  &  &  & (\num{0.0050}) & (\num{0.0049})\\
-female × ed\_Bachelor &  &  &  &  & \num{-1.2999}**\\
- &  &  &  &  & (\num{0.4515})\\
-female × ed\_Master &  &  &  &  & \num{-0.9476}**\\
- &  &  &  &  & (\num{0.2538})\\
-female × ed\_Profess &  &  &  &  & \num{-0.1630}\\
- &  &  &  &  & (\num{0.2268})\\
-female × ed\_PhD &  &  &  &  & \num{-1.0568}**\\
- &  &  &  &  & (\num{0.2336})\\
+(Intercept) & \num{3.3890}** & \num{-2.2818} & \\
+ & (\num{0.0788}) & (\num{1.5510}) & \\
+female & \num{-0.0288} & \num{0.0202} & \num{0.0197}\\
+ & (\num{0.0916}) & (\num{0.0898}) & (\num{0.0909})\\
+grade92 &  & \num{0.1260}** & \num{0.0864}**\\
+ &  & (\num{0.0342}) & (\num{0.0022})\\
+ed\_Bachelor &  &  & \num{-0.5845}**\\
+ &  &  & (\num{0.1480})\\
+ed\_Master &  &  & \num{-0.5644}**\\
+ &  &  & (\num{0.0641})\\
+ed\_Profess &  &  & \num{-0.4271}*\\
+ &  &  & (\num{0.2000})\\
+ed\_PhD &  &  & \num{-0.4634}**\\
+ &  &  & (\num{0.0603})\\
 \midrule
-Num.Obs. & \num{176} & \num{176} & \num{176} & \num{42} & \num{176}\\
-R2 & \num{0.001} & \num{0.001} & \num{0.073} & \num{0.203} & \num{0.119}\\
-Std.Errors & HC2 & HC2 & HC2 & HC1 & HC1\\
+Num.Obs. & \num{176} & \num{176} & \num{176}\\
+R2 & \num{0.001} & \num{0.062} & \num{0.073}\\
+Std.Errors & HC1 & HC1 & HC1\\
 \bottomrule
-\multicolumn{6}{l}{\rule{0pt}{1em}* p $<$ 0.05, ** p $<$ 0.01}\\
+\multicolumn{4}{l}{\rule{0pt}{1em}* p $<$ 0.05, ** p $<$ 0.01}\\
 \end{tabular}
 \end{table}
 
-\includegraphics{a1_files/figure-latex/unnamed-chunk-7-1.pdf}
+\begin{table}
 
-\begin{verbatim}
-## Warning: Ignoring unknown parameters: formual
-\end{verbatim}
-
-\begin{verbatim}
-## `geom_smooth()` using formula 'y ~ x'
-\end{verbatim}
+\caption{\label{tab:unnamed-chunk-7}}
+\centering
+\begin{tabular}[t]{lccc}
+\toprule
+  & Men & Women & All\\
+\midrule
+grade92 & \num{0.0639}** & \num{0.0869}** & \num{0.0639}**\\
+ & (\num{0.0050}) & (\num{0.0000}) & (\num{0.0049})\\
+ed\_Bachelor & \num{0.6626} & \num{-0.6604}** & \num{0.6626}\\
+ & (\num{0.4373}) & (\num{0.1523}) & (\num{0.4270})\\
+ed\_Master & \num{0.4284} & \num{-0.5653}** & \num{0.4284}\\
+ & (\num{0.2591}) & (\num{0.0671}) & (\num{0.2530})\\
+ed\_PhD & \num{0.6481}* & \num{-0.5009}** & \num{0.6481}**\\
+ & (\num{0.2505}) & (\num{0.0570}) & (\num{0.2446})\\
+ed\_Profess &  & \num{-0.2322} & \\
+ &  & (\num{0.2247}) & \\
+female &  &  & \num{0.9679}**\\
+ &  &  & (\num{0.2069})\\
+female × ed\_Bachelor &  &  & \num{-1.2999}**\\
+ &  &  & (\num{0.4515})\\
+female × ed\_Master &  &  & \num{-0.9476}**\\
+ &  &  & (\num{0.2538})\\
+female × ed\_Profess &  &  & \num{-0.1630}\\
+ &  &  & (\num{0.2268})\\
+female × ed\_PhD &  &  & \num{-1.0568}**\\
+ &  &  & (\num{0.2336})\\
+\midrule
+Num.Obs. & \num{42} & \num{134} & \num{176}\\
+R2 & \num{0.203} & \num{0.095} & \num{0.119}\\
+Std.Errors & HC1 & HC1 & HC1\\
+\bottomrule
+\multicolumn{4}{l}{\rule{0pt}{1em}* p $<$ 0.05, ** p $<$ 0.01}\\
+\end{tabular}
+\end{table}
 
 \includegraphics{a1_files/figure-latex/unnamed-chunk-8-1.pdf}
 
 \includegraphics{a1_files/figure-latex/unnamed-chunk-9-1.pdf}
+
+\includegraphics{a1_files/figure-latex/unnamed-chunk-10-1.pdf}
 
 \end{document}
