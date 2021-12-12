@@ -3,3 +3,46 @@ title: "a2"
 author: "Abigail Chen"
 output: pdf_document
 ---
+
+```{r include=FALSE, message=FALSE, warning=FALSE}
+# CLEANING THE ENVIRONMENT
+rm(list=ls())
+
+# OPENING THE LIBRARIES
+library(data.table)
+library(esquisse)
+library(ggplot2)
+library(haven)
+library(huxtable)
+library(lspline)
+library(modelsummary)
+library(pscl)
+library(tidyverse)
+library(xml2)
+```
+
+``` {r include=FALSE, message=FALSE, warning=FALSE}
+# LOADING THE DATA
+# GET THE DATA FROM SOURCES
+hotel_eu_feature <- read_csv("https://osf.io/utwjs/download")
+hotel_eu_price <- read_csv("https://osf.io/p6tyr/download")
+```
+
+
+```{r include=FALSE, message=FALSE, warning=FALSE}
+# JOIN THE TABLES VIA "hotel_id"
+df <- left_join(hotel_eu_price, hotel_eu_feature, by = "hotel_id")
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
