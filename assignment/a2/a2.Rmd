@@ -19,30 +19,28 @@ library(modelsummary)
 library(pscl)
 library(tidyverse)
 library(xml2)
+library(readr)
+library(dplyr)
+library(tidyverse)
+```
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+knitr::opts_chunk$set(error = TRUE)
+knitr::opts_chunk$set(warning = FALSE) 
 ```
 
 ``` {r include=FALSE, message=FALSE, warning=FALSE}
 # LOADING THE DATA
+
 # GET THE DATA FROM SOURCES
-hotel_eu_feature <- read_csv("https://osf.io/utwjs/download")
-hotel_eu_price <- read_csv("https://osf.io/p6tyr/download")
-```
+hotels_europe_features <- read_csv("https://osf.io/utwjs/download")
+hotels_europe_price <- read_csv("https://osf.io/p6tyr/download")
 
-
-```{r include=FALSE, message=FALSE, warning=FALSE}
 # JOIN THE TABLES VIA "hotel_id"
-df <- left_join(hotel_eu_price, hotel_eu_feature, by = "hotel_id")
+hotels <- hotels_europe_price %>%
+  left_join(hotels_europe_features, by = "hotel_id")
 ```
-
-
-
-
-
-
-
-
-
-
 
 
 
