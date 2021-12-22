@@ -1,7 +1,7 @@
 ---
-title: "a2"
+title: "da2 a2"
 author: "Abigail Chen"
-output: pdf_document
+output: html_document
 ---
 
 ```{r include=FALSE, message=FALSE, warning=FALSE}
@@ -22,6 +22,7 @@ library(xml2)
 library(readr)
 library(dplyr)
 library(tidyverse)
+library(fBasics)
 ```
 
 ```{r setup, include=FALSE}
@@ -40,7 +41,72 @@ hotels_europe_price <- read_csv("https://osf.io/p6tyr/download")
 # JOIN THE TABLES VIA "hotel_id"
 hotels <- hotels_europe_price %>%
   left_join(hotels_europe_features, by = "hotel_id")
+
+# CREATING VARIABLES
+hotels$rating <- ifelse(hotels$rating >= 4,1,0)
+
+# CHOOSING 5 CITIES TO COMPARE
+five <- c("Barcelona","Budapest","Hamburg","Istanbul","London")
+hotel_five <- subset(hotels, city %in% five)
+hotel_five <- hotel_five[,c(2,11,12,13,14)]
 ```
 
 
+```{r,message=FALSE,warning=FALSE,error=FALSE}
+# Summary Statistics
+
+# Average Hotel Price
+city_price <- hotel_five %>%
+  group_by(city) %>%
+  summarise(mean_price = mean(price))
+
+ggplot(city_price,aes(x=city,fill = mean_price))+
+  geom_bar()+
+  labs(title = "Average City Hotel Price")
+
+# Average Number of Stars
+city_stars <- hotel_five %>%
+  group_by(city) %>%
+  summarise(avg_stars = mean(stars))
+
+ggplot(city_stars,aes(x=city,fill = avg_stars))+
+  geom_bar()+
+  labs(title = "Average City Hotel Stars")
+
+```
+From the above graphs we can see that London has the highest hotel mean price compare to the other chosen cities. However, in terms of the average stars in the cities hotels London shares a top position with both Hamburg and Istanbul.
+
+# Linear Probability Model
+
+```{r,message=FALSE,warning=FALSE,error=FALSE}
+# Linear Probability Model
+hotel_five_linear <- lm(rating ~ distance + stars, data = hotel_five)
+summary(hotel_five_linear)
+
+```
+From the regression above we can observe that the two variables distance and stars do affect the overall rating of a hotel.
+
+It can however be noted that an increase in distance does reduce the overall rating by 0.8%.
+
+The model however only explains about 18%of the overall ratings.
+
+# Logit Model
+
+```{r,message=FALSE,warning=FALSE,error=FALSE}
+# Logit Model
+hotel_five_logit <- glm(rating ~ distance + stars,family = binomial(link = 'logit')
+                        ,data = hotel_five)
+summary(hotel_five_logit)
+
+```
+From the logit model an increase in distance does reduce the rating by 3.7% which is contrary to an increase in the ratings at 11.9% increase in the number of stars.
+
+# Probit Model
+
+```{r,message=FALSE,warning=FALSE,error=FALSE}
+# Probit Model
+hotel_five_probit <- glm(rating ~ distance + stars,family = binomial(link = 'probit')
+                        ,data = hotel_five)
+summary(hotel_five_probit)
+```
 
