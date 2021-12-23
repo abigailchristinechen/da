@@ -25,9 +25,39 @@ library(tidyverse)
 library(fBasics)
 ```
 
-
-
 ```{r include=FALSE, message=FALSE, warning=FALSE}
 #LOADING THE DATA
 raw_data <- read.csv("/Users/abigailchristinechen/da/assignment/a3/US_abnb.csv", stringsAsFactors = TRUE) 
+```
+
+```{r include=FALSE, message=FALSE, warning=FALSE}
+#CLEANING THE DATA
+sum(is.na(raw_data))
+
+#checking to see which are empty
+summary(raw_data) 
+
+#empty columns filled with NA's
+
+sum(is.na(raw_data$country))   
+sum(is.na(raw_data$bathrooms))
+sum(is.na(raw_data$minstay))
+names(raw_data)
+
+#filtering NA containing columns
+NA_data <- raw_data[,-c(5,7,13,15,20,21)]    
+
+complete_data<-NA_data[complete.cases(NA_data), ]
+
+#Keeping only useful variables
+sig_data <- complete_data[,c(4:11)] 
+
+ #finding outliers in price 
+outliers<-boxplot(sig_data$price)$out
+
+ #removing outliers
+sig_data1<-sig_data[-which(sig_data$price %in% outliers),]
+
+outliers2<-boxplot(sig_data1$bedrooms)$out
+data<-sig_data1[-which(sig_data1$bedrooms %in% outliers2),]
 ```
