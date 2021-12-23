@@ -92,3 +92,28 @@ ggplot(data, aes(x=city, y=price)) + geom_boxplot(outlier.colour = "red") +
   theme(plot.title = element_text(hjust=0.5, face = "italic", color = "darkred"))
 ```
 
+```{r include=FALSE, message=FALSE, warning=FALSE}
+#Rating of customers
+#Converting overall satisfaction into high(1) & Low (0) ratings
+data$overall_satisfaction <- cut(data$overall_satisfaction, breaks = c(-1,3.5,5), labels=c("0","1"))
+
+#BoxPlot of ratings based on accommodates
+ggplot(data, aes(x=overall_satisfaction,y=accommodates,)) + geom_boxplot() +
+  labs(title = "BoxPlot of ratings based on accommodates", x="Ratings", y="Accommodates") +
+  theme(plot.background = element_rect(fill = "lightsalmon")) +
+  theme(plot.title = element_text(hjust=0.5, face = "italic", color = "darkred"))
+
+#BoxPlot of ratings based on number of bedrooms
+ggplot(data, aes(x=overall_satisfaction,y=bedrooms)) + geom_boxplot() +
+  labs(title = "BoxPlot of ratings based on number of bedrooms", x="Ratings", y="No. of Bedrooms") +
+  theme(plot.background = element_rect(fill = "darkseagreen1")) +
+  theme(plot.title = element_text(hjust=0.5, face = "italic", color = "darkred"))
+
+#BoxPlot of ratings based on price
+ggplot(data, aes(x=overall_satisfaction,y=price)) + geom_boxplot() +
+  labs(title = "BoxPlot of ratings based on price", x="Ratings", y="Price") +
+  theme(plot.background = element_rect(fill = "rosybrown")) +
+  theme(plot.title = element_text(hjust=0.5, face = "italic", color = "darkred"))
+
+names(data)
+```
