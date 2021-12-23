@@ -1,0 +1,33 @@
+---
+title: "a3"
+author: "Abigail Chen"
+output: html_document
+---
+
+```{r include=FALSE, message=FALSE, warning=FALSE}
+# CLEANING THE ENVIRONMENT
+rm(list=ls())
+
+# OPENING THE LIBRARIES
+library(data.table)
+library(esquisse)
+library(ggplot2)
+library(haven)
+library(huxtable)
+library(lspline)
+library(modelsummary)
+library(pscl)
+library(tidyverse)
+library(xml2)
+library(readr)
+library(dplyr)
+library(tidyverse)
+library(fBasics)
+```
+
+
+
+```{r include=FALSE, message=FALSE, warning=FALSE}
+#LOADING THE DATA
+raw_data <- read.csv("/Users/abigailchristinechen/da/assignment/a3/US_abnb.csv", stringsAsFactors = TRUE) 
+```
