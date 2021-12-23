@@ -29,7 +29,8 @@ library(fBasics)
 #LOADING THE DATA
 raw_data <- read.csv("/Users/abigailchristinechen/da/assignment/a3/US_abnb.csv", stringsAsFactors = TRUE) 
 ```
-
+#Introduction#
+The goal for this assignment is to find out the relationship between the prices of the various Airbnb Rentals in different cities.  The dataset has cities and sub cities under the neighbourhood column.  The next part will be about cleaning the data and filling empty cells with NA's.
 ```{r include=FALSE, message=FALSE, warning=FALSE}
 #CLEANING THE DATA
 sum(is.na(raw_data))
@@ -60,4 +61,34 @@ sig_data1<-sig_data[-which(sig_data$price %in% outliers),]
 
 outliers2<-boxplot(sig_data1$bedrooms)$out
 data<-sig_data1[-which(sig_data1$bedrooms %in% outliers2),]
+clean_data.csv <- write.csv(data)
+# write.csv(DayData,"DayData.csv", row.names = FALSE)
 ```
+
+```{r include=FALSE, message=FALSE, warning=FALSE}
+#Data Exploration & Visualization
+
+summary(data)
+head(data,2)
+names(data)
+str(data)
+
+#Bar plot based on types of room
+ggplot(data, aes(x=room_type, fill=room_type)) + geom_bar() +
+  labs(title = "Plot of types of rooms", x="Types of Rooms",fill="Types of Rooms") +
+  theme(plot.background = element_rect(fill = "ivory2")) +
+  theme(plot.title = element_text(hjust=0.5, face = "italic", color = "darkred"))
+
+#Plot of cities
+ggplot(data, aes(x=city, fill=city)) + geom_bar() +
+  labs(title = "Plot of cities", x="Cities",fill="Cities") +
+  theme(plot.background = element_rect(fill = "ivory2")) +
+  theme(plot.title = element_text(hjust=0.5, face = "italic", color = "darkred"))
+
+#Box plot of prices based on cities
+ggplot(data, aes(x=city, y=price)) + geom_boxplot(outlier.colour = "red") +
+  labs(title = "Plot of Prices based on cities", x="Cities",y="Price") +
+  theme(plot.background = element_rect(fill = "ivory2")) +
+  theme(plot.title = element_text(hjust=0.5, face = "italic", color = "darkred"))
+```
+
