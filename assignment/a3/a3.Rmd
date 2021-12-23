@@ -117,3 +117,39 @@ ggplot(data, aes(x=overall_satisfaction,y=price)) + geom_boxplot() +
 
 names(data)
 ```
+
+
+```{r include=FALSE, message=FALSE, warning=FALSE}
+#Models
+linear_model <- lm(price~city+overall_satisfaction, data=data)
+summary(linear_model)
+
+sample=sample.split(data, SplitRatio = 0.7)
+train=subset(data, sample==TRUE)
+test=subset(data, sample==FALSE)
+
+logit_model <- glm(overall_satisfaction~price,family = binomial(link = "logit"),data=train)
+summary(logit_model)
+margins(logit_model)
+logit_pred <- predict(logit_model,test)
+logit_cm <- table(test$overall_satisfaction,logit_pred)
+
+# accuracy of prediction of model
+sum(diag(logit_cm)) /sum(logit_cm) 
+
+probit_model <- glm(overall_satisfaction~price+city, family = binomial(link = "probit"),data=train)
+summary(probit_model)
+margins(probit_model)
+
+probit_pred <- predict(probit_model,test)
+probit_cm <- table(test$overall_satisfaction,probit_pred)
+
+#accuracy of prediction of model
+sum(diag(probit_cm)) / sum(probit_cm) 
+```
+
+
+
+
+
+
